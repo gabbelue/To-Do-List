@@ -17,6 +17,14 @@ form {
   margin-bottom: 30px;
 }
 
+/* Labels alinhados à esquerda, negrito e com espaçamento */
+form label {
+  text-align: left;
+  font-weight: bold;
+  display: block;
+  margin-top: 12px;
+}
+
 input[type="text"],
 input[type="date"],
 select {
