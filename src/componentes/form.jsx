@@ -7,19 +7,34 @@ export default function Form() {
     nome: "",
     status: "",
     prioridade: "",
-    data: "",
+    dataInicio: "",
+    dataTermino: "",
   });
 
   const [tarefas, setTarefas] = useState([]);
 
   const adicionaTarefa = (e) => {
     e.preventDefault();
-    if (!tarefa.nome || !tarefa.status || !tarefa.prioridade || !tarefa.data) {
-      return; // Lembrar de colocar aviso 
+
+    if (
+      !tarefa.nome ||
+      !tarefa.status ||
+      !tarefa.prioridade ||
+      !tarefa.dataInicio ||
+      !tarefa.dataTermino
+    ) {
+      alert("Preencha todos os campos.");
+      return;
     }
 
     setTarefas([...tarefas, tarefa]);
-    setTarefa({ nome: "", status: "", prioridade: "", data: "" });
+    setTarefa({
+      nome: "",
+      status: "",
+      prioridade: "",
+      dataInicio: "",
+      dataTermino: "",
+    });
   };
 
   const concluirTarefa = (nome) => {
@@ -39,6 +54,11 @@ export default function Form() {
   const excluirTarefa = (nome) => {
     const novasTarefas = tarefas.filter((t) => t.nome !== nome);
     setTarefas(novasTarefas);
+  };
+
+  // Função auxiliar para formatar data corretamente
+  const formatarData = (data) => {
+    return new Date(data + "T00:00:00").toLocaleDateString("pt-BR");
   };
 
   return (
@@ -79,13 +99,24 @@ export default function Form() {
 
         <input
           type="date"
-          value={tarefa.data}
-          onChange={(e) => setTarefa({ ...tarefa, data: e.target.value })}
+          value={tarefa.dataInicio}
+          onChange={(e) =>
+            setTarefa({ ...tarefa, dataInicio: e.target.value })
+          }
+        />
+
+        <input
+          type="date"
+          value={tarefa.dataTermino}
+          onChange={(e) =>
+            setTarefa({ ...tarefa, dataTermino: e.target.value })
+          }
         />
 
         <button type="submit">Adicionar Tarefa</button>
       </form>
-    <h2>Minhas Tarefas</h2>
+
+      <h2>Minhas Tarefas</h2>
       {tarefas.length > 0 ? (
         <table>
           <thead>
@@ -93,7 +124,8 @@ export default function Form() {
               <th>Nome</th>
               <th>Status</th>
               <th>Prioridade</th>
-              <th>Data</th>
+              <th>Início</th>
+              <th>Término</th>
               <th colSpan={2}>Ações</th>
             </tr>
           </thead>
@@ -103,20 +135,30 @@ export default function Form() {
                 <td>{tarefa.nome}</td>
                 <td>{tarefa.status}</td>
                 <td>{tarefa.prioridade}</td>
-                <td>{tarefa.data}</td>
+                <td>{formatarData(tarefa.dataInicio)}</td>
+                <td>{formatarData(tarefa.dataTermino)}</td>
                 <td>
                   {tarefa.status === "Realizada" ? (
-                    <button className="botao-excluir" onClick={() => reabrirTarefa(tarefa.nome)}>
+                    <button
+                      className="botao-excluir"
+                      onClick={() => reabrirTarefa(tarefa.nome)}
+                    >
                       Reabrir
                     </button>
                   ) : (
-                    <button className="botao-concluir" onClick={() => concluirTarefa(tarefa.nome)}>
+                    <button
+                      className="botao-concluir"
+                      onClick={() => concluirTarefa(tarefa.nome)}
+                    >
                       Concluir
                     </button>
                   )}
                 </td>
                 <td>
-                  <button className="botao-excluir" onClick={() => excluirTarefa(tarefa.nome)}>
+                  <button
+                    className="botao-excluir"
+                    onClick={() => excluirTarefa(tarefa.nome)}
+                  >
                     Excluir
                   </button>
                 </td>

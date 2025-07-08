@@ -10,42 +10,56 @@ export default function Filter({ tarefas, setTarefas }) {
       );
       setTarefas(tarefas_cres);
     } else {
-      const tarefas_cres = [...tarefas].sort((a, b) =>
+      const tarefas_desc = [...tarefas].sort((a, b) =>
         b.nome.localeCompare(a.nome)
       );
-      setTarefas(tarefas_cres);
+      setTarefas(tarefas_desc);
     }
   }
 
   const ordenarPorPrioridade = () => {
     const prioridadeValor = { Alta: 3, Media: 2, Baixa: 1 };
     const listaOrdenada = [...tarefas].sort(
-      (a, b) => (prioridadeValor[b.prioridade] - prioridadeValor[a.prioridade]) ?? 0
+      (a, b) =>
+        (prioridadeValor[b.prioridade] - prioridadeValor[a.prioridade]) ?? 0
     );
     setTarefas(listaOrdenada);
   };
 
-  const ordenarPorData = () => {
-    const tarefas_cres = [...tarefas].sort((a, b) =>
-      a.data.localeCompare(b.data)
+  const ordenarPorDataInicio = () => {
+    const tarefasOrdenadas = [...tarefas].sort((a, b) =>
+      a.dataInicio.localeCompare(b.dataInicio)
     );
-    setTarefas(tarefas_cres);
+    setTarefas(tarefasOrdenadas);
+  };
+
+  const ordenarPorDataTermino = () => {
+    const tarefasOrdenadas = [...tarefas].sort((a, b) =>
+      a.dataTermino.localeCompare(b.dataTermino)
+    );
+    setTarefas(tarefasOrdenadas);
   };
 
   return (
-    <>
-      <div className="filter-buttons">
-        <button onClick={Reset}>Reset</button>
+    <div className="filter-buttons">
+      <button onClick={Reset}>Reset</button>
 
-        <span style={{alignSelf: "center", marginLeft: "10px", marginRight:"8px", color:"#ccc"}}>
-          Filtrar por:
-        </span>
+      <span
+        style={{
+          alignSelf: "center",
+          marginLeft: "10px",
+          marginRight: "8px",
+          color: "#ccc",
+        }}
+      >
+        Filtrar por:
+      </span>
 
-        <button onClick={() => Ordenar("cres")}>Crescente</button>
-        <button onClick={() => Ordenar("desc")}>Decrescente</button>
-        <button onClick={ordenarPorPrioridade}>Prioridade</button>
-        <button onClick={ordenarPorData}>Data</button>
-      </div>
-    </>
+      <button onClick={() => Ordenar("cres")}>Crescente</button>
+      <button onClick={() => Ordenar("desc")}>Decrescente</button>
+      <button onClick={ordenarPorPrioridade}>Prioridade</button>
+      <button onClick={ordenarPorDataInicio}>Data de Início</button>
+      <button onClick={ordenarPorDataTermino}>Data de Término</button>
+    </div>
   );
 }
