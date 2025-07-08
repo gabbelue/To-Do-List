@@ -51,10 +51,22 @@ export default function Form() {
     setTarefas(tarefasAtualizadas);
   };
 
+  // Função que exclui uma tarefa da lista
   const excluirTarefa = (nome) => {
+    // Filtra a lista de tarefas e remove aquela cujo nome corresponde ao informado
     const novasTarefas = tarefas.filter((t) => t.nome !== nome);
+
+    // Atualiza o estado com a nova lista, sem a tarefa excluída
     setTarefas(novasTarefas);
   };
+
+  /*
+    Funcionalidade - Excluir:
+    - Permite ao usuário remover tarefas que não são mais necessárias.
+    - Mantém a lista de tarefas organizada e atualizada.
+    - Evita acúmulo de tarefas obsoletas ou criadas por engano.
+    - Dá controle total ao usuário sobre sua agenda.
+  */
 
   // Função auxiliar para formatar data corretamente
   const formatarData = (data) => {
