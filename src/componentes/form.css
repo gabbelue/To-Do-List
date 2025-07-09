@@ -11,6 +11,7 @@ h1, h2 {
 }
 
 form {
+  width: 800px;
   display: flex;
   flex-direction: column;
   gap: 15px;
